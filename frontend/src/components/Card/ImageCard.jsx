@@ -4,7 +4,7 @@ import './ImageCard.css'
 
 const ImageCard = ({ imageUrl, title, description }) => {
     return (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card className = "image-card" sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"
           height="140"

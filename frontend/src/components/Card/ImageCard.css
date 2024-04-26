@@ -1,4 +1,10 @@
-.image-card:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in-out;
+ /* Add hover effect to cards */
+ .image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Adjust transition for smooth animation */
+  .image-card {
+    transition: transform 0.3s, box-shadow 0.3s;
   }

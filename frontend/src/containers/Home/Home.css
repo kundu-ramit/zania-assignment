@@ -1,0 +1,26 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Add vertical spacing between rows */
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Add horizontal spacing between cards */
+  }
+  
+  /* Additional CSS to prevent horizontal overflow */
+  .card-container {
+    max-width: 100%; /* Ensure cards don't overflow horizontally */
+    overflow-x: auto; /* Enable horizontal scrolling if necessary */
+  }
+  
+ 
