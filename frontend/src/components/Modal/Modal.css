@@ -1,0 +1,67 @@
+/* Modal CSS */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal.open {
+    display: block;
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    margin-top: 30px;
+    padding: 5px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    position: relative;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Image Card CSS */
+  .image-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+  }
+  
+  .image-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .image-card h2 {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  
+  .image-card p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  

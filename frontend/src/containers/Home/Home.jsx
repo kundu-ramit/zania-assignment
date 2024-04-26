@@ -1,45 +1,86 @@
+import { useEffect, useState } from "react";
 import ImageCard from "../../components/Card/ImageCard";
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import './Home.css'
+import { fetchCatData, fetchDefaultData } from "./FetchCats";
 
 const Home = () => {
+
+  function ConvertToDraggableIndex(data)
+{
+  return <Draggable key={data.Position} draggableId={data.Position} index={data.Position} >
+  {(provided) => (
+    <div
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+    >
+      <ImageCard
+            {...data[0]}
+          />
+    </div>
+  )}
+</Draggable>
+}
+
+  const [catData , setCatData] = useState([...fetchDefaultData()])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetchCatData();
+        setCatData(response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+    fetchData();
+  }, []); 
+
+  const onDragEnd = ()=> {
+
+  }
+
   return (
     <div className="home">
+      <DragDropContext onDragEnd={onDragEnd}>
       <div className="card-container">
-        {/* Render 3 cards above */}
+      <Droppable droppableId="droppable">
+        {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
         <div className="row">
-          <ImageCard
-            imageUrl="https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg?size=626&ext=jpg"
-            title="Card 1"
-            description="This is card 1."
+          <ConvertToDraggableIndex
+            data={catData[0]}
           />
-          <ImageCard
-            imageUrl="https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg?size=626&ext=jpg"
-            title="Card 2"
-            description="This is card 2."
+          <ConvertToDraggableIndex
+            data={catData[1]}
           />
-          <ImageCard
-            imageUrl="https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg?size=626&ext=jpg"
-            title="Card 3"
-            description="This is card 3."
+          <ConvertToDraggableIndex
+            data={catData[2]}
           />
         </div>
-        {/* Render 2 cards below */}
         <div className="row">
-          <ImageCard
-            imageUrl="https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg?size=626&ext=jpg"
-            title="Card 4"
-            description="This is card 4."
+        <ConvertToDraggableIndex
+            data={catData[3]}
           />
-          <ImageCard
-            imageUrl="https://img.freepik.com/free-photo/cute-domestic-kitten-sits-window-staring-outside-generative-ai_188544-12519.jpg?size=626&ext=jpg"
-            title="Card 5"
-            description="This is card 5."
+         <ConvertToDraggableIndex
+            data={catData[4]}
           />
         </div>
+        </div>
+        )}
+        </Droppable>
       </div>
+      </DragDropContext>
     </div>
   );
 };
+
+
 
 export default Home;
 
