@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/kundu-ramit/zania-backend/domain/entity"
 	"github.com/kundu-ramit/zania-backend/service"
 )
 
@@ -35,17 +36,23 @@ func (sc catController) GetAllCats(c *gin.Context) {
 
 func (sc catController) AddCat(c *gin.Context) {
 
-	err := sc.service.AddCat(c)
+	var cat entity.Cat
+	if err := c.BindJSON(&cat); err != nil {
+		c.String(http.StatusBadRequest, "Invalid Cat body")
+		return
+	}
+	err := sc.service.AddCat(c, cat)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
-	c.JSON(http.StatusOK, cats)
+	c.JSON(http.StatusOK, cat)
 }
 
 func (sc catController) RemoveCat(c *gin.Context) {
 
-	err := sc.service.Delete(c)
+	id := c.Param("id")
+	err := sc.service.RemoveCat(c, id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return

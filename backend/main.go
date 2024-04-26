@@ -24,6 +24,8 @@ func main() {
 		startServer()
 	case "migration":
 		applyMigration()
+	case "seed":
+		applySeed()
 	default:
 		log.Fatal("Invalid command:", args[0])
 	}
@@ -34,6 +36,11 @@ func applyMigration() {
 	db := database.Initialize()
 	cmd.ApplyMigration(db)
 
+}
+
+func applySeed() {
+	db := database.Initialize()
+	cmd.SeedCats(db)
 }
 
 func startServer() {
