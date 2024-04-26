@@ -15,7 +15,7 @@ func SetupRouter() *gin.Engine {
 	config.AllowAllOrigins = true
 	router.Use(cors.New(config))
 
-	scraperController := controllers.NewScraperController()
+	catController := controllers.NewCatController()
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -23,17 +23,14 @@ func SetupRouter() *gin.Engine {
 		})
 	})
 
-	//find a specific scrape
-	router.GET("/scrape/:id", scraperController.Get)
+	//find all cats
+	router.GET("/get/all", catController.GetAllCats)
 
-	//find the latest scrape
-	router.GET("/scrape", scraperController.Get)
+	//add a new cat
+	router.POST("/add", catController.AddCat)
 
-	//order a new scrape
-	router.POST("/scrape", scraperController.StartScrape)
-
-	//delete all scrape records
-	router.DELETE("/scrape", scraperController.Clear)
+	//delete a specific cat
+	router.DELETE("/remove/:id", catController.RemoveCat)
 
 	return router
 }

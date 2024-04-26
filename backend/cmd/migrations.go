@@ -11,27 +11,24 @@ import (
 func ApplyMigration(db *gorm.DB) {
 
 	m := gormigrate.New(db, gormigrate.DefaultOptions, []*gormigrate.Migration{{
-		// create `dozers` table
-		ID: "201608301400_bull_dozers",
+		// create `cats` table
+		ID: "201608301400_cats",
 		Migrate: func(tx *gorm.DB) error {
 
 			fmt.Println("Migrating 201608301400 create table")
 
-			type bullDozer struct {
-				Make            string `gorm:"column:make;"`
-				Model           string `gorm:"column:model;"`
-				Picture         string `gorm:"column:picture;"`
-				Category        string `gorm:"column:category;"` //better as enum
-				EngineHP        string `gorm:"column:engine_hp;"`
-				OperatingWeight string `gorm:"column:operating_weight;"`
-				ScrapeIndex     string `gorm:"column:scrape_index;"`
+			type cats struct {
+				Type     string `gorm:"column:type;"`
+				Title    string `gorm:"column:title;"`
+				Position string `gorm:"column:position;"`
+				Image    string `gorm:"column:image;"`
 			}
 			// it's a good pratice to copy the struct inside the function,
 			// so side effects are prevented if the original struct changes during the time
-			return tx.Migrator().CreateTable(&bullDozer{})
+			return tx.Migrator().CreateTable(&cats{})
 		},
 		Rollback: func(tx *gorm.DB) error {
-			return tx.Migrator().DropTable("bull_dozers")
+			return tx.Migrator().DropTable("cats")
 		},
 	}})
 
