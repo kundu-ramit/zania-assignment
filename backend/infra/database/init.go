@@ -17,5 +17,3 @@ func Initialize() *gorm.DB {
 	fmt.Println("connected to postgres")
 	return db
 }
-
-//Design Decision: not creating global variables cause they create trouble during api tests.

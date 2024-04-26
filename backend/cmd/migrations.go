@@ -18,6 +18,7 @@ func ApplyMigration(db *gorm.DB) {
 			fmt.Println("Migrating 201608301400 create table")
 
 			type cats struct {
+				ID       uint   `gorm:"primaryKey"`
 				Type     string `gorm:"column:type;"`
 				Title    string `gorm:"column:title;"`
 				Position string `gorm:"column:position;"`

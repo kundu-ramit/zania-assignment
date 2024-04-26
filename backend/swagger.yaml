@@ -1,39 +1,73 @@
-swagger: "2.0"
+openapi: 3.0.0
 info:
-  version: "1.0.0"
-  title: Go Scrape API
-basePath: /scrape
-schemes:
-  - http
-host: localhost:8002
+  title: Cat API
+  description: API for managing cats
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
 paths:
-  /:
-    post:
-      summary: Scrape data
-      description: Endpoint to initiate scraping
-      produces:
-        - application/json
-      responses:
-        200:
-          description: Successful operation
-      tags:
-        - Scrape
-  /{id}:
+  /cats:
     get:
-      summary: Get scraped data by ID
-      description: Endpoint to retrieve scraped data by ID
-      produces:
-        - application/json
-      parameters:
-        - name: id
-          in: path
-          description: ID of the scraped data
-          required: true
-          type: integer
+      summary: Get all cats
       responses:
-        200:
-          description: Successful operation
-        404:
-          description: Scrape data not found
-      tags:
-        - Scrape
+        '200':
+          description: A list of cats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cat'
+        '400':
+          description: Bad Request
+    post:
+      summary: Add a new cat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cat'
+      responses:
+        '200':
+          description: The added cat
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cat'
+        '400':
+          description: Bad Request
+  /cats/{id}:
+    delete:
+      summary: Remove a cat by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Deleted the record
+        '400':
+          description: Bad Request
+components:
+  schemas:
+    Cat:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        title:
+          type: string
+        position:
+          type: string
+        image:
+          type: string
+      required:
+        - type
+        - title
+        - position
+        - image
