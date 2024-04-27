@@ -13,9 +13,7 @@ func SetupRouter() *gin.Engine {
 
 	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true // Allow requests from all origins
-	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
-	config.AllowHeaders = []string{"Content-Type", "Authorization"}
+	config.AllowAllOrigins = true
 	router.Use(cors.New(config))
 
 	catController := controllers.NewCatController()
