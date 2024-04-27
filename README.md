@@ -15,7 +15,7 @@ cd .\backend\
   go run main.go seed                     - FOR SEEDING VALUE
    go run main.go server                  - RUNS BACKEND SERVER
 
-   TAKE A LOOK AT SWAGGER FOR APIS. CHECK OUT THE VIDEO I HAVE MADE TOO TO UNDERSTAND BETTER.
+   TAKE A LOOK AT SWAGGER FOR APIS.
 
 FOR FRONTEND :
 
