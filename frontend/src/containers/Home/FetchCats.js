@@ -21,8 +21,10 @@ const fetchCatData =  async() => {
 
   const updateCatData = async(catData) => {
 
-    if(!arePositionsUnique(catData))
-    return;
+    if(!arePositionsUnique(catData)){
+      return;
+    }
+
   
     const response = await fetch('http://localhost:8002/position/update', {
       method: 'POST',
@@ -71,13 +73,14 @@ const fetchCatData =  async() => {
   }
 
   function arePositionsUnique(arr) {
+    console.log(arr)
     let positionsSet = new Set();
     
     for (let obj of arr) {
-        if (positionsSet.has(obj.position)) {
+        if (positionsSet.has(obj.Position)) {
             return false;
         } else {
-            positionsSet.add(obj.position);
+            positionsSet.add(obj.Position);
         }
     }
     
