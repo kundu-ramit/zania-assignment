@@ -36,18 +36,13 @@ const Home = () => {
     fetchData();
   }, []); 
 
-  useEffect(() => {
-    if(!isDataFetched)
-    return;
-    async function saveData() {
-      try {
-        await updateCatData(catData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+  const saveData = async(catData) => {
+    try {
+      await updateCatData(catData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-    saveData();
-  }, [catData]); 
+  }
 
   const onDragEnd = ({source,destination})=> {
     if(source == null || destination == null )
@@ -71,8 +66,9 @@ const Home = () => {
     bdata = bdata.sort((a, b) => {
       return a.Position - b.Position;
   });
-  console.log(bdata);
+  
   setCatData([...bdata]);
+  saveData(bdata)
   }
 
   return (
