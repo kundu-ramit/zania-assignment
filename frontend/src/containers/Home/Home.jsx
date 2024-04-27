@@ -2,21 +2,17 @@ import { useEffect, useState } from "react";
 import ImageCard from "../../components/Card/ImageCard";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import './Home.css'
-import { fetchCatData, fetchDefaultData } from "./FetchCats";
+import { fetchCatData, fetchDefaultData ,updateCatData} from "./FetchCats";
 
 const Home = () => {
 
-  function ConvertToDraggableIndex(data)
+  function ConvertToDraggableIndex({data})
 {
-  return <Draggable key={data.Position} draggableId={data.Position} index={data.Position} >
+  return <Draggable key={data.Position} draggableId={data.Position} index={parseInt(data.Position)} >
   {(provided) => (
-    <div
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-    >
+    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
       <ImageCard
-            {...data[0]}
+            {...data}
           />
     </div>
   )}
@@ -38,15 +34,49 @@ const Home = () => {
     fetchData();
   }, []); 
 
-  const onDragEnd = ()=> {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        await updateCatData(catData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
 
+    fetchData();
+  }, [catData]); 
+
+  const onDragEnd = ({source,destination})=> {
+    if(source == null || destination == null )
+    return;
+    const s = source.index;
+    const d = destination.index;
+    let bdata = [];
+    for(var i=0;i<catData.length;i++)
+    {
+      bdata[i] = {...catData[i]}
+      if(bdata[i].Position == s)
+      {
+        bdata[i].Position = d.toString();
+        continue;
+      }
+      if(bdata[i].Position == d)
+      {
+        bdata[i].Position = s.toString();
+      }
+    }
+    bdata = bdata.sort((a, b) => {
+      return a.Position - b.Position;
+  });
+  console.log(bdata)
+  setCatData([...bdata]);
   }
 
   return (
     <div className="home">
       <DragDropContext onDragEnd={onDragEnd}>
       <div className="card-container">
-      <Droppable droppableId="droppable">
+      <Droppable droppableId="droppable" direction="horizontal">
         {(provided) => (
             <div
               {...provided.droppableProps}
@@ -76,6 +106,7 @@ const Home = () => {
         </Droppable>
       </div>
       </DragDropContext>
+      
     </div>
   );
 };

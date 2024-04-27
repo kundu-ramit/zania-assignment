@@ -20,7 +20,6 @@
   /* Additional CSS to prevent horizontal overflow */
   .card-container {
     max-width: 100%; /* Ensure cards don't overflow horizontally */
-    overflow-x: auto; /* Enable horizontal scrolling if necessary */
   }
   
  

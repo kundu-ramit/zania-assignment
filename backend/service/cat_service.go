@@ -11,6 +11,7 @@ type CatService interface {
 	GetAllCats(ctx context.Context) ([]entity.Cat, error)
 	AddCat(ctx context.Context, cat entity.Cat) error
 	RemoveCat(ctx context.Context, id string) error
+	UpdateCatPositions(ctx context.Context, cats []entity.Cat) error
 }
 
 type catService struct {
@@ -45,6 +46,10 @@ func (d catService) AddCat(ctx context.Context, cat entity.Cat) error {
 		return err
 	}
 	return nil
+}
+
+func (d catService) UpdateCatPositions(ctx context.Context, cats []entity.Cat) error {
+	return d.repo.Update(ctx, cats)
 }
 
 func (d catService) RemoveCat(ctx context.Context, id string) error {

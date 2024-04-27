@@ -12,6 +12,7 @@ type CatController interface {
 	GetAllCats(c *gin.Context)
 	AddCat(c *gin.Context)
 	RemoveCat(c *gin.Context)
+	UpdateCatPositions(c *gin.Context)
 }
 
 type catController struct {
@@ -31,6 +32,23 @@ func (sc catController) GetAllCats(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
+	c.JSON(http.StatusOK, cats)
+}
+
+func (sc catController) UpdateCatPositions(c *gin.Context) {
+
+	var cats []entity.Cat
+	if err := c.BindJSON(&cats); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	err := sc.service.UpdateCatPositions(c, cats)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
 	c.JSON(http.StatusOK, cats)
 }
 

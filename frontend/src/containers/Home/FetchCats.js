@@ -19,6 +19,17 @@ const fetchCatData =  async() => {
     }
   }
 
+  const updateCatData = async(catData) => {
+    const response = await fetch('http://localhost:8002/position/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(catData)
+    })
+    console.log(response)
+  }
+
 
   const fetchDefaultData = () => {
     return [
@@ -55,4 +66,4 @@ const fetchCatData =  async() => {
       ]
   }
 
-  export {fetchCatData,fetchDefaultData}
+  export {fetchCatData,fetchDefaultData,updateCatData}

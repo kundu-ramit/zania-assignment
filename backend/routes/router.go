@@ -9,10 +9,13 @@ import (
 )
 
 func SetupRouter() *gin.Engine {
-
 	router := gin.Default()
+
+	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true
+	config.AllowAllOrigins = true // Allow requests from all origins
+	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	config.AllowHeaders = []string{"Content-Type", "Authorization"}
 	router.Use(cors.New(config))
 
 	catController := controllers.NewCatController()
@@ -23,14 +26,17 @@ func SetupRouter() *gin.Engine {
 		})
 	})
 
-	//find all cats
+	// Find all cats
 	router.GET("/get/all", catController.GetAllCats)
 
-	//add a new cat
+	// Add a new cat
 	router.POST("/add", catController.AddCat)
 
-	//delete a specific cat
+	// Delete a specific cat
 	router.DELETE("/remove/:id", catController.RemoveCat)
+
+	// Update cat positions
+	router.POST("position/update", catController.UpdateCatPositions)
 
 	return router
 }
