@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './Modal.css'
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Card } from '@mui/material';
 
 const Modal = ({ isOpen, closeModal, title, description, imageUrl }) => {
   // Close the modal when pressing Escape key
